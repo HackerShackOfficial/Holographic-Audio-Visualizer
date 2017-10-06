@@ -15,6 +15,11 @@ server.get('/prev', function (req, res) {
   res.send('success');
 })
 
+server.get('/toggleVisualizerSettings', function(req, res) {
+  mainWindow.webContents.send("control", "TOGGLE_VISUALIZER_SETTING")
+  res.send("success");
+})
+
 server.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 })
