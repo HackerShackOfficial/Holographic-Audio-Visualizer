@@ -6,13 +6,14 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
 
-function AudioVisualizer() {
+function AudioVisualizer(element) {
     //Rendering
     this.scene;
     this.camera;
     this.renderer;
+    this.animationId = 0;
 
-    this.element;
+    this.element = element;
 
     //particles
     this.particles;
@@ -23,12 +24,11 @@ function AudioVisualizer() {
     this.phiSpread = new Array()
 }
 
-AudioVisualizer.prototype.initialize = function (element) {
-
-	this.element = element
+AudioVisualizer.prototype.initialize = function () {
 	this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera( 70, this.element.clientWidth / this.element.clientHeight, 1, 1000);
-    this.camera.position.z = 150;
+    this.camera.position.z = 200;
+    this.camera.position.y = 40;
 
     var ambientLight = new THREE.AmbientLight( 0x606060 ); // soft white light
 	this.scene.add( ambientLight );
@@ -63,7 +63,7 @@ AudioVisualizer.prototype.initialize = function (element) {
 	geometry.colors = this.particleColors
 
 	this.particleMaterial = new THREE.PointsMaterial({
-		size: 2,
+		size: 4,
 		map: new THREE.TextureLoader().load("https://threejs.org/examples/textures/sprites/disc.png"),
 		vertexColors: THREE.VertexColors,
 
@@ -130,9 +130,13 @@ AudioVisualizer.prototype.animate = function(audioSource) {
 
 	var that = this;
 
-	requestAnimationFrame(function() {
+	this.animationId = requestAnimationFrame(function() {
     	that.animate(audioSource);
     });
+}
+
+AudioVisualizer.prototype.stop = function() {
+	cancelAnimationFrame(this.animationId);
 }
 
 module.exports = AudioVisualizer;

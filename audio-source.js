@@ -48,6 +48,8 @@ exports.SoundCloudAudioSource = function(player, streams, onPlayStream, continuo
 	this.volumeLow = 0;
 	this.volumeHi = 0;
 	this.streamData = new Uint8Array(analyser.frequencyBinCount);
+	this.isPlaying = false;
+	this.currentTime = 0;
 
 	this.playStream = function(stream) {
 	    player.crossOrigin = 'anonymous';
@@ -58,12 +60,25 @@ exports.SoundCloudAudioSource = function(player, streams, onPlayStream, continuo
 
 	this.play = function() {
 		player.pause();
+		this.isPlaying = true;
 		player.currentTime = 0;
 		this.playStream(streams[streamIndex])
 	}
 
+	this.resume = function() {
+		player.currentTime = this.currentTime;
+		player.play();
+		this.isPlaying = true;
+	}
+
+	this.toggle = function() {
+		this.isPlaying ? this.pause() : this.resume();
+	}
+
 	this.pause = function() {
+		this.currentTime = player.currentTime;
 		player.pause();
+		this.isPlaying = false;
 	}
 
 	this.next = function() {
@@ -78,6 +93,10 @@ exports.SoundCloudAudioSource = function(player, streams, onPlayStream, continuo
 			streamIndex--;
 			this.play();
 		}
+	}
+
+	this.setVolume = function(volume) {
+		player.volume = volume;
 	}
 
 	this.shuffle = function() {

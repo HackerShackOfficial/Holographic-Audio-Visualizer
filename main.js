@@ -15,8 +15,29 @@ server.get('/prev', function (req, res) {
   res.send('success');
 })
 
-server.get('/toggleVisualizerSettings', function(req, res) {
+server.get('/toggle', function (req, res) {
+  mainWindow.webContents.send("control", "TOGGLE_PLAY")
+  res.send('success');
+})
+
+server.get('/volume', function (req, res) {
+  let volume = Number(req.query['level']);
+  if (volume) {
+    volume = volume > 100 ? 100 : volume;
+    volume = volume < 0 ? 0 : volume;
+    volume = volume / 100.0;
+    mainWindow.webContents.send("volume", volume.toString());
+  }
+  res.send('success');
+})
+
+server.get('/toggleVis', function(req, res) {
   mainWindow.webContents.send("control", "TOGGLE_VISUALIZER_SETTING")
+  res.send("success");
+})
+
+server.get('/changeVis', function(req, res) {
+  mainWindow.webContents.send("control", "CHANGE_VISUALIZER")
   res.send("success");
 })
 

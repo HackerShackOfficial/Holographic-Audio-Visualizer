@@ -10,48 +10,15 @@
         margin: 0;
        }
 
-       #fullscreen {
+       .fullscreen {
         position: absolute;
         top: 30px;
         left:0;
         right:0;
         bottom:0;
        }
-
-       .bottom {
-          background-color: green;
-          position: absolute;
-          bottom: 0;
-          width:200px;
-          height:200px;
-          margin-left: auto; 
-          margin-right: auto; 
-          left: 0;
-          right: 0;
-        }
-
-        .left {
-          background-color: red;
-          transform: rotate(90deg) translate(0, 50%);
-          transform-origin: top;
-        }
-
-        .right {
-          background-color: blue;
-          transform: rotate(180deg) translate(0, 100%);
-          transform-origin: top;
-        }
-
-        .top {
-          background-color: orange;
-          transform: rotate(-90deg) translate(50%, 0%);
-          transform-origin: top;
-        }
-        .hidden {
-          display: none;
-        }
         .cover-art {
-          padding: 20px;
+          padding: 50px;
           position: absolute;
           right: 0;
           bottom: 0;
@@ -59,20 +26,22 @@
           width: 150px;
           z-index: 2;
         }
+        .hidden {
+          display: none;
+        }
+
+        .black {
+          background-color: black;
+        }
 
      </style>
   </head>
-  <body>
-    <audio id="player" controls="" autoplay="" preload autobuffer></audio>
+  <body class="black">
+    <audio class="hidden" id="player" controls="" autoplay="" preload autobuffer></audio>
     <img src="" id="cover-art" class="cover-art"></img>
-    <div id="fullscreen"></div>
-    <div class="hidden">
-      <div class="bottom" id="bottom"></div>
-      <div class="bottom left" id="left"></div>
-      <div class="bottom right" id="right"></div>
-      <div class="bottom top" id="top"></div>
-    </div>
-    
+    <div id="cube" class="fullscreen"></div>
+    <div id="particle" class="fullscreen"></div>
+    <div id="spectrum" class="fullscreen"></div>
     <script>
       // You can also require other files to run in this process
       require('./renderer.js')

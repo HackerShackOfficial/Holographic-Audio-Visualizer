@@ -1,6 +1,6 @@
 // spectrum-visualizer.js
 
-function AudioVisualizer() {
+function AudioVisualizer(element) {
     //constants
     this.numberOfBars = 40;
 
@@ -8,9 +8,9 @@ function AudioVisualizer() {
     this.scene;
     this.camera;
     this.renderer;
-    this.controls;
+    this.animationId = 0;
 
-    this.element;
+    this.element = element;
 
     this.activeColorIdx = 0;
     this.colorSelections = [
@@ -37,11 +37,11 @@ function AudioVisualizer() {
     this.analyser;
 }
 
-AudioVisualizer.prototype.initialize = function (element) {
-
-	this.element = element
+AudioVisualizer.prototype.initialize = function () {
 	this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera( 70, this.element.clientWidth / this.element.clientHeight, 1, 1000);
+    this.camera.position.z = 40
+    this.camera.position.y = 20
 
     var ambientLight = new THREE.AmbientLight( 0x606060 ); // soft white light
 	this.scene.add( ambientLight );
@@ -161,9 +161,13 @@ AudioVisualizer.prototype.animate = function(audioSource) {
 
 	var that = this;
 
-	requestAnimationFrame(function() {
+	this.animationId = requestAnimationFrame(function() {
     	that.animate(audioSource);
     });
+}
+
+AudioVisualizer.prototype.stop = function() {
+	cancelAnimationFrame(this.animationId);
 }
 
 module.exports = AudioVisualizer;
