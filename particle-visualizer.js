@@ -95,6 +95,7 @@ AudioVisualizer.prototype.toggle = function() {
 }
 
 AudioVisualizer.prototype.render = function(audioSource, clamp=96) {
+
 	// get the average for the first channel
 	const array = audioSource.streamData.slice(0, clamp)
 
