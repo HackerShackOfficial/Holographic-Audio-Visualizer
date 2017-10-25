@@ -23,7 +23,7 @@ def flick(start, finish):
 @flicklib.double_tap()
 def dt(position):
 	try:
-		print('tap-' + position)
+		print('double-tap: ' + position)
 		requests.get(host + '/toggle')
 	except:
 		print "Error connecting to host"
